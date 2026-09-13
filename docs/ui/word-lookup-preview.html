@@ -1,0 +1,613 @@
+<style>
+  #wl-design-preview {
+    --wl-paper: light-dark(#ffffff, #202523);
+    --wl-page: light-dark(#fcfcfa, #191d1b);
+    --wl-chrome: light-dark(#f0f2ef, #272d29);
+    --wl-ink: light-dark(#26342d, #e6ece7);
+    --wl-secondary: light-dark(#647168, #a5b4aa);
+    --wl-faint: light-dark(#e7ece7, #37413a);
+    --wl-accent: light-dark(#287a56, #8bd7ae);
+    --wl-accent-ink: light-dark(#ffffff, #142d20);
+    --wl-soft: light-dark(#edf5ef, #2a4132);
+    --wl-selected: light-dark(#cfe8d8, #355c43);
+    --wl-shadow: light-dark(#203d2520, #00000050);
+    --wl-warning: light-dark(#80682f, #d3bd83);
+    --wl-knob: light-dark(#ffffff, #f1f7f2);
+    width: 100%;
+    color: var(--wl-ink);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color-scheme: inherit;
+  }
+  #wl-design-preview * { box-sizing: border-box; }
+  #wl-design-preview [hidden] { display: none !important; }
+  #wl-design-preview button,
+  #wl-design-preview input { font: inherit; }
+  #wl-design-preview button { cursor: pointer; }
+  #wl-design-preview button:disabled,
+  #wl-design-preview input:disabled { cursor: not-allowed; }
+  #wl-design-preview svg { flex: 0 0 auto; }
+  #wl-design-preview .wl-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 0 12px;
+    font-size: 12px;
+    color: var(--wl-secondary);
+  }
+  #wl-design-preview .wl-heading strong { color: var(--wl-ink); font-weight: 500; }
+  #wl-design-preview .wl-window {
+    border: 1px solid var(--wl-faint);
+    border-radius: 16px;
+    background: var(--wl-page);
+    overflow: clip;
+  }
+  #wl-design-preview .wl-tabbar {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 12px 16px 0;
+    background: var(--wl-chrome);
+  }
+  #wl-design-preview .wl-window-dots { display: flex; gap: 6px; padding-bottom: 10px; }
+  #wl-design-preview .wl-window-dots span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--wl-secondary);
+    opacity: .5;
+    border-radius: 50%;
+  }
+  #wl-design-preview .wl-tab {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    width: 212px;
+    padding: 8px 15px;
+    background: var(--wl-page);
+    border-radius: 10px 10px 0 0;
+    font-size: 12px;
+  }
+  #wl-design-preview .wl-tab svg { width: 15px; height: 15px; color: var(--wl-accent); }
+  #wl-design-preview .wl-addressbar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--wl-faint);
+    background: var(--wl-page);
+  }
+  #wl-design-preview .wl-navigation {
+    display: flex;
+    gap: 14px;
+    color: var(--wl-secondary);
+  }
+  #wl-design-preview .wl-navigation svg { width: 16px; height: 16px; }
+  #wl-design-preview .wl-address {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+    gap: 9px;
+    border-radius: 7px;
+    padding: 5px 12px;
+    color: var(--wl-secondary);
+    background: var(--wl-chrome);
+    font-size: 12px;
+  }
+  #wl-design-preview .wl-address svg { width: 13px; height: 13px; }
+  #wl-design-preview .wl-address span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #wl-design-preview .wl-extension-trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    border: 1px solid var(--wl-accent);
+    border-radius: 8px;
+    color: var(--wl-accent);
+    background: var(--wl-soft);
+    font-weight: 500;
+  }
+  #wl-design-preview .wl-extension-trigger[aria-expanded="true"] {
+    color: var(--wl-accent-ink);
+    background: var(--wl-accent);
+  }
+  #wl-design-preview .wl-canvas {
+    position: relative;
+    min-height: 510px;
+    padding: 35px clamp(22px, 6.5%, 68px) 45px;
+    background: var(--wl-page);
+  }
+  #wl-design-preview .wl-article { max-width: 610px; }
+  #wl-design-preview .wl-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--wl-secondary);
+    font-size: 12px;
+  }
+  #wl-design-preview .wl-breadcrumb svg { width: 14px; height: 14px; }
+  #wl-design-preview .wl-article h2 {
+    margin: 18px 0 8px;
+    color: var(--wl-ink);
+    font-size: 27px;
+    line-height: 1.45;
+    letter-spacing: -.7px;
+    font-weight: 500;
+  }
+  #wl-design-preview .wl-article-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    color: var(--wl-secondary);
+    font-size: 12px;
+    margin-bottom: 26px;
+  }
+  #wl-design-preview .wl-article p {
+    color: var(--wl-secondary);
+    line-height: 2;
+    font-size: 15px;
+    margin: 0 0 23px;
+  }
+  #wl-design-preview .wl-word-trigger {
+    display: inline;
+    border: 0;
+    border-radius: 3px;
+    padding: 1px 3px;
+    color: var(--wl-ink);
+    background: transparent;
+    text-decoration: underline;
+    text-decoration-color: var(--wl-faint);
+    text-underline-offset: 4px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 18px;
+  }
+  #wl-design-preview .wl-word-trigger[aria-pressed="true"] {
+    background: var(--wl-selected);
+    text-decoration: none;
+  }
+  #wl-design-preview .wl-document-line {
+    height: 1px;
+    margin: 30px 0 14px;
+    background: var(--wl-faint);
+  }
+  #wl-design-preview .wl-document-foot {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+    font-size: 12px;
+    color: var(--wl-secondary);
+  }
+  #wl-design-preview .wl-document-foot svg { width: 14px; height: 14px; }
+  #wl-design-preview .wl-popover {
+    position: absolute;
+    z-index: 5;
+    width: min(340px, calc(100% - 32px));
+    left: 16px;
+    top: 172px;
+    border: 1px solid var(--wl-faint);
+    border-radius: 14px;
+    background: var(--wl-paper);
+    box-shadow: 0 14px 42px var(--wl-shadow), 0 2px 7px var(--wl-shadow);
+  }
+  #wl-design-preview .wl-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px 0 20px;
+  }
+  #wl-design-preview .wl-source,
+  #wl-design-preview .wl-footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--wl-secondary);
+    font-size: 11px;
+  }
+  #wl-design-preview .wl-source svg,
+  #wl-design-preview .wl-footer-status svg { width: 13px; height: 13px; }
+  #wl-design-preview .wl-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 0;
+    border-radius: 5px;
+    color: var(--wl-secondary);
+    background: transparent;
+  }
+  #wl-design-preview .wl-icon-button:hover { background: var(--wl-chrome); }
+  #wl-design-preview .wl-icon-button svg { width: 16px; height: 16px; }
+  #wl-design-preview .wl-card-body { padding: 2px 20px 19px; }
+  #wl-design-preview .wl-word-title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 7px;
+  }
+  #wl-design-preview .wl-word-title strong {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 34px;
+    line-height: 1.35;
+    font-weight: 500;
+    letter-spacing: -.6px;
+    overflow-wrap: anywhere;
+  }
+  #wl-design-preview .wl-lemma-origin {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 23px;
+    color: var(--wl-secondary);
+  }
+  #wl-design-preview .wl-phonetic-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 21px;
+  }
+  #wl-design-preview .wl-phonetic { color: var(--wl-secondary); font-size: 14px; }
+  #wl-design-preview .wl-audio {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 9px;
+    border: 0;
+    border-radius: 7px;
+    color: var(--wl-accent);
+    background: var(--wl-soft);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  #wl-design-preview .wl-audio svg { width: 15px; height: 15px; }
+  #wl-design-preview .wl-audio[data-playing="true"] { color: var(--wl-accent-ink); background: var(--wl-accent); }
+  #wl-design-preview .wl-definitions { display: grid; gap: 15px; }
+  #wl-design-preview .wl-definition { display: grid; grid-template-columns: 36px 1fr; gap: 9px; align-items: start; }
+  #wl-design-preview .wl-pos {
+    padding-top: 2px;
+    font-size: 12px;
+    color: var(--wl-secondary);
+  }
+  #wl-design-preview .wl-definition p { margin: 0; color: var(--wl-ink); font-size: 14px; line-height: 1.7; }
+  #wl-design-preview .wl-lemma-note { margin: -10px 0 15px; color: var(--wl-secondary); font-size: 11px; }
+  #wl-design-preview .wl-empty {
+    padding: 8px 0 9px;
+    color: var(--wl-ink);
+    font-size: 14px;
+  }
+  #wl-design-preview .wl-empty span { display: block; margin-top: 5px; color: var(--wl-secondary); font-size: 12px; }
+  #wl-design-preview .wl-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 17px;
+    border-top: 1px solid var(--wl-faint);
+    color: var(--wl-secondary);
+    font-size: 11px;
+  }
+  #wl-design-preview .wl-key { padding: 1px 4px; border: 1px solid var(--wl-faint); border-radius: 4px; font-family: inherit; font-size: 10px; }
+  #wl-design-preview .wl-menu {
+    position: absolute;
+    z-index: 8;
+    top: 8px;
+    right: 13px;
+    width: min(310px, calc(100% - 26px));
+    padding: 22px 21px 16px;
+    background: var(--wl-paper);
+    border: 1px solid var(--wl-faint);
+    border-radius: 14px;
+    box-shadow: 0 14px 42px var(--wl-shadow), 0 2px 7px var(--wl-shadow);
+  }
+  #wl-design-preview .wl-menu-brand { display: flex; gap: 12px; align-items: center; }
+  #wl-design-preview .wl-brand-mark {
+    display: grid;
+    place-items: center;
+    width: 39px;
+    height: 39px;
+    border-radius: 11px;
+    background: var(--wl-soft);
+    color: var(--wl-accent);
+    font-size: 20px;
+    font-weight: 500;
+  }
+  #wl-design-preview .wl-menu-brand h3 { margin: 0; font-size: 16px; font-weight: 500; }
+  #wl-design-preview .wl-menu-brand p { margin: 2px 0 0; color: var(--wl-secondary); font-size: 11px; }
+  #wl-design-preview .wl-menu-controls { margin-top: 22px; }
+  #wl-design-preview .wl-setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 15px 0;
+    border-top: 1px solid var(--wl-faint);
+    cursor: pointer;
+  }
+  #wl-design-preview .wl-setting-title { display: block; font-size: 13px; font-weight: 500; }
+  #wl-design-preview .wl-setting-subtitle { display: block; color: var(--wl-secondary); font-size: 11px; margin-top: 3px; overflow-wrap: anywhere; }
+  #wl-design-preview .wl-switch {
+    appearance: none;
+    position: relative;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 22px;
+    margin: 0;
+    border: 1px solid var(--wl-secondary);
+    border-radius: 22px;
+    background: var(--wl-chrome);
+    cursor: pointer;
+  }
+  #wl-design-preview .wl-switch::before {
+    content: "";
+    display: block;
+    width: 16px;
+    height: 16px;
+    margin: 2px;
+    border-radius: 50%;
+    background: var(--wl-secondary);
+  }
+  #wl-design-preview .wl-switch:checked { background: var(--wl-accent); border-color: var(--wl-accent); }
+  #wl-design-preview .wl-switch:checked::before { transform: translateX(14px); background: var(--wl-knob); }
+  #wl-design-preview .wl-switch:disabled { opacity: .45; }
+  #wl-design-preview .wl-menu-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--wl-accent);
+    padding: 11px 12px;
+    border-radius: 8px;
+    background: var(--wl-soft);
+    font-size: 12px;
+  }
+  #wl-design-preview .wl-menu-status svg { width: 14px; height: 14px; }
+  #wl-design-preview .wl-menu-status[data-paused="true"] { color: var(--wl-warning); background: var(--wl-chrome); }
+  #wl-design-preview .wl-privacy { margin: 15px 0 0; text-align: center; font-size: 11px; color: var(--wl-secondary); }
+  @media (max-width: 580px) {
+    #wl-design-preview .wl-canvas { padding: 25px 23px 30px; min-height: 565px; }
+    #wl-design-preview .wl-article h2 { font-size: 23px; }
+    #wl-design-preview .wl-article p { font-size: 14px; }
+    #wl-design-preview .wl-navigation { display: none; }
+    #wl-design-preview .wl-addressbar { gap: 10px; padding: 9px 12px; }
+    #wl-design-preview .wl-heading { font-size: 11px; }
+    #wl-design-preview .wl-popover { width: min(340px, calc(100% - 24px)); }
+    #wl-design-preview .wl-card-body { padding-right: 17px; padding-left: 17px; }
+    #wl-design-preview .wl-word-title strong { font-size: 30px; }
+  }
+  @media (pointer: coarse) {
+    #wl-design-preview .wl-extension-trigger,
+    #wl-design-preview .wl-icon-button { min-width: 44px; min-height: 44px; }
+    #wl-design-preview .wl-audio { min-height: 44px; }
+    #wl-design-preview .wl-word-trigger { display: inline-block; min-height: 44px; }
+    #wl-design-preview .wl-setting { min-height: 60px; }
+  }
+</style>
+
+<div id="wl-design-preview">
+  <div class="wl-heading">
+    <strong>网页划词 · 界面预览</strong>
+    <span>本地查词 / 轻量浮窗</span>
+  </div>
+  <div class="wl-window" aria-label="划词查词扩展界面示意">
+    <div class="wl-tabbar">
+      <div class="wl-window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="wl-tab"><i data-lucide="book-open" aria-hidden="true"></i><span>阅读札记</span></div>
+    </div>
+    <div class="wl-addressbar">
+      <div class="wl-navigation" aria-hidden="true"><i data-lucide="arrow-left"></i><i data-lucide="rotate-cw"></i></div>
+      <div class="wl-address"><i data-lucide="lock-keyhole" aria-hidden="true"></i><span>docs.example.com/reading</span></div>
+      <button class="wl-extension-trigger" id="wl-menu-trigger" type="button" aria-label="查看插件菜单" aria-expanded="false" aria-controls="wl-settings-menu">词</button>
+    </div>
+    <div class="wl-canvas" id="wl-canvas">
+      <article class="wl-article" aria-label="示例网页">
+        <div class="wl-breadcrumb"><i data-lucide="notebook-pen" aria-hidden="true"></i><span>阅读札记</span><span aria-hidden="true">/</span><span>语言与理解</span></div>
+        <h2>从一个单词，继续阅读</h2>
+        <div class="wl-article-meta"><span>英语阅读</span><span>示例网页</span></div>
+        <p>一个简单的 <button class="wl-word-trigger" type="button" data-word="bank" aria-label="预览 bank 的查词卡片" aria-pressed="true">bank</button>，既可能指金融机构，也可能指河岸。看见不同的词义，再回到上下文，理解就自然发生了。</p>
+        <p>当遇到 <button class="wl-word-trigger" type="button" data-word="went" aria-label="预览 went 的原形回查状态" aria-pressed="false">went</button> 这样的变形词，清晰的原形标注能够帮助我们建立联系，而不打断阅读的节奏。</p>
+        <p>词库也有边界。对于 <button class="wl-word-trigger" type="button" data-word="zznotaword" aria-label="预览未收录状态" aria-pressed="false">zznotaword</button>，一个明确的未收录提示，比猜测出来的答案更可靠。</p>
+        <div class="wl-document-line"></div>
+        <div class="wl-document-foot"><i data-lucide="mouse-pointer-2" aria-hidden="true"></i><span id="wl-page-status">划词查词已启用</span></div>
+      </article>
+
+      <section class="wl-popover" id="wl-word-card" aria-label="单词查词卡片">
+        <div class="wl-card-head">
+          <span class="wl-source"><i data-lucide="book-open" aria-hidden="true"></i>本地词库</span>
+          <button class="wl-icon-button" id="wl-close-card" type="button" aria-label="关闭查词卡片"><i data-lucide="x" aria-hidden="true"></i></button>
+        </div>
+        <div class="wl-card-body">
+          <div class="wl-word-title"><span class="wl-lemma-origin" id="wl-lemma-origin" hidden>went →</span><strong id="wl-current-word">bank</strong></div>
+          <div class="wl-phonetic-row" id="wl-phonetic-row">
+            <span class="wl-phonetic" id="wl-phonetic">/bæŋk/</span>
+            <button class="wl-audio" id="wl-audio" type="button" aria-label="预览英式发音按钮，不播放音频"><i data-lucide="volume-2" aria-hidden="true"></i><span id="wl-audio-label">英式发音</span></button>
+          </div>
+          <p class="wl-lemma-note" id="wl-lemma-note" hidden>以下释义、音标与发音对应原形 go</p>
+          <div class="wl-definitions" id="wl-definitions">
+            <div class="wl-definition"><span class="wl-pos">n.</span><p>银行；河岸</p></div>
+            <div class="wl-definition"><span class="wl-pos">v.</span><p>把钱存入银行；倾斜转弯</p></div>
+          </div>
+          <div class="wl-empty" id="wl-empty" hidden>本地词库未收录<span>未找到此词或对应原形</span></div>
+        </div>
+        <div class="wl-card-footer">
+          <span class="wl-footer-status"><i data-lucide="shield-check" aria-hidden="true"></i><span id="wl-audio-status" role="status" aria-live="polite">离线查询</span></span>
+          <span><kbd class="wl-key">Esc</kbd> 关闭</span>
+        </div>
+      </section>
+
+      <section class="wl-menu" id="wl-settings-menu" aria-label="插件工具栏菜单" hidden>
+        <div class="wl-menu-brand"><span class="wl-brand-mark" aria-hidden="true">词</span><div><h3>划词查词</h3><p>本地词库 · 无需联网</p></div></div>
+        <div class="wl-menu-controls">
+          <label class="wl-setting" for="wl-global-enabled">
+            <span><span class="wl-setting-title">启用划词查词</span><span class="wl-setting-subtitle">选中英文单词时显示</span></span>
+            <input class="wl-switch" id="wl-global-enabled" type="checkbox" role="switch" checked>
+          </label>
+          <label class="wl-setting" for="wl-site-enabled">
+            <span><span class="wl-setting-title">在当前网站启用</span><span class="wl-setting-subtitle">docs.example.com</span></span>
+            <input class="wl-switch" id="wl-site-enabled" type="checkbox" role="switch" checked>
+          </label>
+        </div>
+        <div class="wl-menu-status" id="wl-menu-status" role="status" aria-live="polite"><i data-lucide="circle-check" aria-hidden="true"></i><span id="wl-menu-status-text">当前网站已启用</span></div>
+        <p class="wl-privacy">选词与网页内容不会上传</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const root = document.getElementById("wl-design-preview");
+    const canvas = root.querySelector("#wl-canvas");
+    const card = root.querySelector("#wl-word-card");
+    const menu = root.querySelector("#wl-settings-menu");
+    const menuTrigger = root.querySelector("#wl-menu-trigger");
+    const globalSwitch = root.querySelector("#wl-global-enabled");
+    const siteSwitch = root.querySelector("#wl-site-enabled");
+    const audioButton = root.querySelector("#wl-audio");
+    const audioLabel = root.querySelector("#wl-audio-label");
+    const audioStatus = root.querySelector("#wl-audio-status");
+    const wordTitle = root.querySelector("#wl-current-word");
+    const lemmaOrigin = root.querySelector("#wl-lemma-origin");
+    const phoneticRow = root.querySelector("#wl-phonetic-row");
+    const phonetic = root.querySelector("#wl-phonetic");
+    const lemmaNote = root.querySelector("#wl-lemma-note");
+    const definitions = root.querySelector("#wl-definitions");
+    const emptyState = root.querySelector("#wl-empty");
+    const triggers = [...root.querySelectorAll(".wl-word-trigger")];
+    const states = {
+      bank: { word: "bank", phonetic: "/bæŋk/", definitions: [["n.", "银行；河岸"], ["v.", "把钱存入银行；倾斜转弯"]] },
+      went: { word: "go", phonetic: "/ɡəʊ/", definitions: [["v.", "去；走；行进"]], lemma: true },
+      zznotaword: { word: "zznotaword", definitions: [] }
+    };
+    let selectedWord = "bank";
+    let audioTimer;
+
+    function stopAudioPreview() {
+      clearTimeout(audioTimer);
+      audioButton.dataset.playing = "false";
+      audioLabel.textContent = "英式发音";
+      audioStatus.textContent = "离线查询";
+    }
+
+    function placeCard() {
+      if (card.hidden) return;
+      const anchor = triggers.find(trigger => trigger.dataset.word === selectedWord);
+      const anchorRect = anchor.getBoundingClientRect();
+      const canvasRect = canvas.getBoundingClientRect();
+      const margin = 12;
+      const cardWidth = card.offsetWidth;
+      const cardHeight = card.offsetHeight;
+      const availableHeight = canvas.clientHeight;
+      const left = Math.max(margin, Math.min(anchorRect.left - canvasRect.left - 8, canvas.clientWidth - cardWidth - margin));
+      const below = anchorRect.bottom - canvasRect.top + 9;
+      const above = anchorRect.top - canvasRect.top - cardHeight - 9;
+      const top = below + cardHeight <= availableHeight - margin ? below : Math.max(margin, above);
+      card.style.left = left + "px";
+      card.style.top = top + "px";
+    }
+
+    function closeCard() {
+      card.hidden = true;
+      stopAudioPreview();
+      triggers.forEach(trigger => trigger.setAttribute("aria-pressed", "false"));
+    }
+
+    function closeMenu() {
+      menu.hidden = true;
+      menuTrigger.setAttribute("aria-expanded", "false");
+    }
+
+    function showWord(word) {
+      closeMenu();
+      if (!globalSwitch.checked || !siteSwitch.checked) return;
+      stopAudioPreview();
+      selectedWord = word;
+      const state = states[word];
+      wordTitle.textContent = state.word;
+      lemmaOrigin.hidden = !state.lemma;
+      lemmaNote.hidden = !state.lemma;
+      phoneticRow.hidden = !state.phonetic;
+      phonetic.textContent = state.phonetic || "";
+      emptyState.hidden = state.definitions.length !== 0;
+      definitions.hidden = state.definitions.length === 0;
+      definitions.replaceChildren();
+      state.definitions.forEach(([partOfSpeech, meaning]) => {
+        const row = document.createElement("div");
+        row.className = "wl-definition";
+        const label = document.createElement("span");
+        label.className = "wl-pos";
+        label.textContent = partOfSpeech;
+        const translation = document.createElement("p");
+        translation.textContent = meaning;
+        row.append(label, translation);
+        definitions.append(row);
+      });
+      card.hidden = false;
+      triggers.forEach(trigger => trigger.setAttribute("aria-pressed", String(trigger.dataset.word === word)));
+      placeCard();
+    }
+
+    triggers.forEach(trigger => {
+      trigger.addEventListener("click", () => showWord(trigger.dataset.word));
+    });
+
+    menuTrigger.addEventListener("click", () => {
+      const opening = menu.hidden;
+      closeCard();
+      menu.hidden = !opening;
+      menuTrigger.setAttribute("aria-expanded", String(opening));
+    });
+
+    root.querySelector("#wl-close-card").addEventListener("click", closeCard);
+
+    canvas.addEventListener("click", event => {
+      if (card.contains(event.target) || menu.contains(event.target)) return;
+      if (triggers.some(trigger => trigger.contains(event.target))) return;
+      closeCard();
+      closeMenu();
+    });
+
+    root.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeCard();
+        closeMenu();
+      }
+    });
+
+    function updatePreferences() {
+      siteSwitch.disabled = !globalSwitch.checked;
+      const enabled = globalSwitch.checked && siteSwitch.checked;
+      root.querySelector("#wl-menu-status").dataset.paused = String(!enabled);
+      root.querySelector("#wl-menu-status-text").textContent = !globalSwitch.checked
+        ? "划词查词已暂停"
+        : siteSwitch.checked ? "当前网站已启用" : "已在当前网站停用";
+      root.querySelector("#wl-page-status").textContent = enabled
+        ? "划词查词已启用"
+        : !globalSwitch.checked ? "划词查词已暂停" : "已在当前网站停用";
+      if (!enabled) closeCard();
+    }
+
+    globalSwitch.addEventListener("change", updatePreferences);
+    siteSwitch.addEventListener("change", updatePreferences);
+    audioButton.addEventListener("click", () => {
+      stopAudioPreview();
+      audioButton.dataset.playing = "true";
+      audioLabel.textContent = "播放示意";
+      audioStatus.textContent = "预览不播放音频";
+      audioTimer = setTimeout(stopAudioPreview, 1800);
+    });
+
+    const observer = new ResizeObserver(placeCard);
+    observer.observe(canvas);
+    observer.observe(card);
+    requestAnimationFrame(placeCard);
+  })();
+</script>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" fill="none">
+  <title>蜷睡猫</title>
+  <g stroke="#287a56" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M26 61V36Q26 32 31 36L45 48Q54 45 62 48L76 36Q80 32 80 37V53C105 51 116 71 106 87C95 106 61 108 37 99C19 93 16 73 26 61Z"/>
+    <path d="M95 67C82 60 68 67 68 79C68 91 82 95 91 87"/>
+    <path stroke-width="5" d="M32 69Q36 74 41 70M49 70Q53 75 58 71"/>
+  </g>
+</svg>

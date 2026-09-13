@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>离线划词验收页</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body { max-width: 760px; padding: 44px 24px; margin: auto; font: 16px/1.9 system-ui, sans-serif; }
+      h1 { font-size: 26px; font-weight: 500; }
+      section { margin-top: 32px; }
+      .words { display: flex; gap: 30px; flex-wrap: wrap; }
+      input, textarea, [contenteditable] { font: inherit; padding: 10px; }
+      .editor { padding: 12px; border: 1px solid gray; }
+      .spacer { height: 900px; }
+      #bottom { text-align: right; }
+    </style>
+  </head>
+  <body>
+    <h1>离线划词验收</h1>
+    <p>双击或拖动选中英文单词。下列正文没有预置下划线、选词按钮或模拟卡片。</p>
+    <article id="english-article">
+      A bank may refer to a financial institution or the land beside a river.
+      Reading a dictionary can help people understand unfamiliar words.
+      Yesterday someone went running along the river.
+    </article>
+    <section class="words">
+      <span id="bank">bank</span><span id="went">went</span><span id="running">running</span>
+      <span id="dictionary">dictionary</span><span id="unknown">zznotaword</span>
+      <span id="punctuation">“Don’t!”</span><span id="hyphen">mother-in-law</span>
+    </section>
+    <section>
+      <p id="multiple">hello world</p><p id="chinese">中文</p><p id="number">123</p>
+      <input aria-label="输入框排除测试" value="bank">
+      <textarea aria-label="文本域排除测试">dictionary</textarea>
+      <div contenteditable="true" class="editor" aria-label="编辑器排除测试">bank running</div>
+    </section>
+    <div class="spacer"></div>
+    <p id="bottom">dictionary</p>
+  </body>
+</html>

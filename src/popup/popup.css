@@ -1,0 +1,76 @@
+:root {
+  color-scheme: light dark;
+  --paper: light-dark(#ffffff, #202523);
+  --ink: light-dark(#26342d, #e6ece7);
+  --secondary: light-dark(#647168, #a5b4aa);
+  --border: light-dark(#e7ece7, #37413a);
+  --accent: light-dark(#287a56, #8bd7ae);
+  --soft: light-dark(#edf5ef, #2a4132);
+}
+* { box-sizing: border-box; }
+body {
+  width: 310px;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 13px/1.6 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+main { padding: 22px 21px 16px; }
+header { display: flex; gap: 12px; align-items: center; }
+.brand {
+  display: grid;
+  place-items: center;
+  width: 39px;
+  height: 39px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: var(--soft);
+  color: var(--accent);
+}
+.brand-logo {
+  width: 29px;
+  height: 29px;
+  background: currentColor;
+  mask: url('icons/cat-logo.svg') center / contain no-repeat;
+}
+h1 { margin: 0; font-size: 16px; font-weight: 500; }
+header p { margin: 2px 0 0; color: var(--secondary); font-size: 11px; }
+.controls { margin-top: 22px; }
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 15px 0;
+  border-top: 1px solid var(--border);
+  cursor: pointer;
+}
+strong { display: block; font-size: 13px; font-weight: 500; }
+small { display: block; margin-top: 3px; color: var(--secondary); font-size: 11px; overflow-wrap: anywhere; }
+input {
+  appearance: none;
+  width: 36px;
+  height: 22px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--secondary);
+  border-radius: 22px;
+  background: var(--border);
+  cursor: pointer;
+}
+input::before {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin: 2px;
+  border-radius: 50%;
+  background: var(--secondary);
+}
+input:checked { background: var(--accent); border-color: var(--accent); }
+input:checked::before { transform: translateX(14px); background: #ffffff; }
+input:disabled { opacity: .45; cursor: not-allowed; }
+input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.status { margin: 0; padding: 11px 12px; border-radius: 8px; color: var(--accent); background: var(--soft); font-size: 12px; }
+.status[data-error="true"] { color: light-dark(#954539, #f1ada4); background: light-dark(#f9eeea, #452e2b); }
+.privacy { margin: 15px 0 0; text-align: center; font-size: 11px; color: var(--secondary); }

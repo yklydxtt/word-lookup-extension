@@ -1,0 +1,256 @@
+<style>
+  #cat-logo-preview {
+    --cat-paper: light-dark(#ffffff, #202523);
+    --cat-ink: light-dark(#26342d, #e6ece7);
+    --cat-secondary: light-dark(#647168, #a5b4aa);
+    --cat-border: light-dark(#e7ece7, #37413a);
+    --cat-accent: light-dark(#287a56, #8bd7ae);
+    --cat-soft: light-dark(#edf5ef, #2a4132);
+    color-scheme: light dark;
+    color: var(--cat-ink);
+    font: 14px/1.6 -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    width: 100%;
+  }
+  #cat-logo-preview * { box-sizing: border-box; }
+  #cat-logo-preview .cat-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  #cat-logo-preview h2 { margin: 0; color: var(--cat-ink); font-family: inherit; font-size: 18px; line-height: 1.5; font-weight: 500; }
+  #cat-logo-preview .cat-note { color: var(--cat-secondary); font-size: 12px; }
+  #cat-logo-preview .cat-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  #cat-logo-preview .cat-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 17px;
+    min-width: 0;
+    padding: 20px 12px 17px;
+    border: 1px solid var(--cat-border);
+    border-radius: 16px;
+    background: var(--cat-paper);
+    color: var(--cat-ink);
+    font: inherit;
+    text-align: center;
+    cursor: pointer;
+  }
+  #cat-logo-preview .cat-choice[aria-pressed="true"] { border-color: var(--cat-accent); background: var(--cat-soft); color: var(--cat-ink); }
+  #cat-logo-preview .cat-label { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; justify-content: center; font-weight: 500; }
+  #cat-logo-preview .cat-letter { color: var(--cat-secondary); font-size: 12px; font-weight: 400; }
+  #cat-logo-preview .cat-art { width: 96px; height: 96px; max-width: 100%; }
+  #cat-logo-preview .cat-art canvas { width: 100%; height: 100%; }
+  #cat-logo-preview .cat-caption { color: var(--cat-secondary); font-size: 12px; font-weight: 400; }
+  #cat-logo-preview .cat-sizes { display: flex; gap: 21px; align-items: flex-end; justify-content: center; }
+  #cat-logo-preview .cat-size { display: flex; flex-direction: column; align-items: center; gap: 7px; color: var(--cat-secondary); font-size: 11px; }
+  #cat-logo-preview .cat-size-mark { height: 32px; display: flex; align-items: center; justify-content: center; }
+  #cat-logo-preview canvas { display: block; flex-shrink: 0; color: var(--cat-accent); }
+  #cat-logo-preview .cat-context-heading { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 28px 0 12px; font-size: 12px; color: var(--cat-secondary); }
+  #cat-logo-preview .cat-contexts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  #cat-logo-preview .cat-context { min-width: 0; border: 1px solid var(--cat-border); border-radius: 14px; overflow: hidden; color: var(--cat-ink); background: var(--cat-paper); }
+  #cat-logo-preview .cat-context[data-theme="light"] { color-scheme: light; }
+  #cat-logo-preview .cat-context[data-theme="dark"] { color-scheme: dark; }
+  #cat-logo-preview .cat-toolbar { display: flex; align-items: center; gap: 12px; padding: 13px 17px; border-bottom: 1px solid var(--cat-border); font-size: 11px; color: var(--cat-secondary); }
+  #cat-logo-preview .cat-toolbar-name { flex: 1; min-width: 0; }
+  #cat-logo-preview .cat-menu { padding: 20px; }
+  #cat-logo-preview .cat-menu-head { display: flex; gap: 12px; align-items: center; }
+  #cat-logo-preview .cat-brand { display: flex; align-items: center; justify-content: center; width: 39px; height: 39px; flex-shrink: 0; background: var(--cat-soft); border-radius: 11px; color: var(--cat-accent); }
+  #cat-logo-preview .cat-brand canvas { width: 29px; height: 29px; }
+  #cat-logo-preview .cat-product-name { margin: 0; font-size: 16px; font-weight: 500; color: var(--cat-ink); }
+  #cat-logo-preview .cat-product-subtitle { font-size: 11px; color: var(--cat-secondary); margin-top: 2px; }
+  #cat-logo-preview .cat-context-caption { margin-top: 19px; border-top: 1px solid var(--cat-border); padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--cat-secondary); font-size: 11px; }
+  #cat-logo-preview .cat-context-caption span:last-child { color: var(--cat-accent); }
+  @media (max-width: 520px) {
+    #cat-logo-preview .cat-choices { gap: 8px; }
+    #cat-logo-preview .cat-choice { padding: 14px 7px; gap: 13px; border-radius: 12px; }
+    #cat-logo-preview .cat-art { width: 74px; height: 74px; }
+    #cat-logo-preview .cat-label { gap: 4px; font-size: 12px; }
+    #cat-logo-preview .cat-caption { font-size: 11px; }
+    #cat-logo-preview .cat-sizes { gap: 13px; }
+    #cat-logo-preview .cat-contexts { grid-template-columns: 1fr; }
+  }
+</style>
+<div id="cat-logo-preview" data-selected="outline">
+  <div class="cat-heading">
+    <h2>小猫标识</h2>
+    <span class="cat-note">设计预览 · 未替换插件</span>
+  </div>
+  <div class="cat-choices" role="group" aria-label="小猫标识候选">
+    <button class="cat-choice" data-choice="outline" type="button" aria-pressed="true" aria-label="预览 A 留白猫，简洁轮廓，推荐">
+      <span class="cat-label"><span class="cat-letter">A</span>留白猫</span>
+      <span class="cat-art"><canvas data-mark="outline" data-size="96" role="img" aria-label="圆润轮廓、双耳与两点眼睛的小猫"></canvas></span>
+      <span class="cat-caption">轻巧轮廓 · 推荐</span>
+      <span class="cat-sizes">
+        <span class="cat-size"><span class="cat-size-mark"><canvas data-mark="outline" data-size="16" aria-hidden="true"></canvas></span>16px</span>
+        <span class="cat-size"><span class="cat-size-mark"><canvas data-mark="outline" data-size="32" aria-hidden="true"></canvas></span>32px</span>
+      </span>
+    </button>
+    <button class="cat-choice" data-choice="solid" type="button" aria-pressed="false" aria-label="预览 B 墨色猫，实心猫头">
+      <span class="cat-label"><span class="cat-letter">B</span>墨色猫</span>
+      <span class="cat-art"><canvas data-mark="solid" data-size="96" role="img" aria-label="绿色实心猫头与留白眼睛"></canvas></span>
+      <span class="cat-caption">实心剪影 · 更醒目</span>
+      <span class="cat-sizes">
+        <span class="cat-size"><span class="cat-size-mark"><canvas data-mark="solid" data-size="16" aria-hidden="true"></canvas></span>16px</span>
+        <span class="cat-size"><span class="cat-size-mark"><canvas data-mark="solid" data-size="32" aria-hidden="true"></canvas></span>32px</span>
+      </span>
+    </button>
+    <button class="cat-choice" data-choice="sleepy" type="button" aria-pressed="false" aria-label="预览 C 蜷睡猫，带卷尾的睡猫">
+      <span class="cat-label"><span class="cat-letter">C</span>蜷睡猫</span>
+      <span class="cat-art"><canvas data-mark="sleepy" data-size="96" role="img" aria-label="闭眼蜷卧、尾巴卷起的小猫"></canvas></span>
+      <span class="cat-caption">慵懒卷尾 · 更柔和</span>
+      <span class="cat-sizes">
+        <span class="cat-size"><span class="cat-size-mark"><canvas data-mark="sleepy" data-size="16" aria-hidden="true"></canvas></span>16px</span>
+        <span class="cat-size"><span class="cat-size-mark"><canvas data-mark="sleepy" data-size="32" aria-hidden="true"></canvas></span>32px</span>
+      </span>
+    </button>
+  </div>
+  <div class="cat-context-heading">
+    <span>工具栏与菜单标识</span>
+    <span id="cat-selected-name" role="status" aria-live="polite">当前预览：A · 留白猫</span>
+  </div>
+  <div class="cat-contexts">
+    <section class="cat-context" data-theme="light" aria-label="浅色界面效果">
+      <div class="cat-toolbar">
+        <span class="cat-toolbar-name">浅色工具栏</span>
+        <canvas data-live data-size="16" aria-label="浅色工具栏图标" role="img"></canvas>
+        <span>16px</span>
+      </div>
+      <div class="cat-menu">
+        <div class="cat-menu-head">
+          <span class="cat-brand"><canvas data-live data-size="29" aria-hidden="true"></canvas></span>
+          <div><div class="cat-product-name">划词查词</div><div class="cat-product-subtitle">本地词库 · 无需联网</div></div>
+        </div>
+        <div class="cat-context-caption"><span>浅色菜单</span><span>本地查词</span></div>
+      </div>
+    </section>
+    <section class="cat-context" data-theme="dark" aria-label="深色界面效果">
+      <div class="cat-toolbar">
+        <span class="cat-toolbar-name">深色工具栏</span>
+        <canvas data-live data-size="16" aria-label="深色工具栏图标" role="img"></canvas>
+        <span>16px</span>
+      </div>
+      <div class="cat-menu">
+        <div class="cat-menu-head">
+          <span class="cat-brand"><canvas data-live data-size="29" aria-hidden="true"></canvas></span>
+          <div><div class="cat-product-name">划词查词</div><div class="cat-product-subtitle">本地词库 · 无需联网</div></div>
+        </div>
+        <div class="cat-context-caption"><span>深色菜单</span><span>本地查词</span></div>
+      </div>
+    </section>
+  </div>
+</div>
+<script>
+  (() => {
+    const root = document.getElementById('cat-logo-preview');
+    const names = { outline: 'A · 留白猫', solid: 'B · 墨色猫', sleepy: 'C · 蜷睡猫' };
+    const appearance = matchMedia('(prefers-color-scheme: dark)');
+    const canvases = [...root.querySelectorAll('canvas')];
+    let selected = 'outline';
+
+    function head(context) {
+      context.beginPath();
+      context.moveTo(27, 49);
+      context.lineTo(27, 23);
+      context.quadraticCurveTo(27, 19, 32, 22);
+      context.lineTo(49, 35);
+      context.quadraticCurveTo(64, 31, 79, 35);
+      context.lineTo(96, 22);
+      context.quadraticCurveTo(101, 19, 101, 24);
+      context.lineTo(101, 49);
+      context.bezierCurveTo(111, 64, 105, 84, 95, 93);
+      context.bezierCurveTo(80, 107, 48, 107, 33, 93);
+      context.bezierCurveTo(21, 82, 18, 64, 27, 49);
+      context.closePath();
+    }
+
+    function paint(canvas) {
+      const variant = canvas.dataset.mark || selected;
+      const size = Number(canvas.dataset.size);
+      const ratio = Math.max(2, Math.min(devicePixelRatio || 1, 3));
+      const ink = getComputedStyle(canvas).color;
+      canvas.width = size * ratio;
+      canvas.height = size * ratio;
+      canvas.style.width = `${size}px`;
+      canvas.style.height = `${size}px`;
+      if (canvas.parentElement.classList.contains('cat-art')) {
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+      }
+      canvas.dataset.renderedMark = variant;
+      const context = canvas.getContext('2d');
+      context.scale(canvas.width / 128, canvas.height / 128);
+      context.strokeStyle = ink;
+      context.fillStyle = ink;
+      context.lineWidth = size <= 20 ? 8 : 6.5;
+      context.lineJoin = 'round';
+      context.lineCap = 'round';
+      if (variant === 'sleepy') {
+        context.beginPath();
+        context.moveTo(26, 61);
+        context.lineTo(26, 36);
+        context.quadraticCurveTo(26, 32, 31, 36);
+        context.lineTo(45, 48);
+        context.quadraticCurveTo(54, 45, 62, 48);
+        context.lineTo(76, 36);
+        context.quadraticCurveTo(80, 32, 80, 37);
+        context.lineTo(80, 53);
+        context.bezierCurveTo(105, 51, 116, 71, 106, 87);
+        context.bezierCurveTo(95, 106, 61, 108, 37, 99);
+        context.bezierCurveTo(19, 93, 16, 73, 26, 61);
+        context.closePath();
+        context.stroke();
+        context.beginPath();
+        context.moveTo(95, 67);
+        context.bezierCurveTo(82, 60, 68, 67, 68, 79);
+        context.bezierCurveTo(68, 91, 82, 95, 91, 87);
+        context.stroke();
+        context.lineWidth = size <= 20 ? 6.5 : 5;
+        context.beginPath();
+        context.moveTo(32, 69);
+        context.quadraticCurveTo(36, 74, 41, 70);
+        context.moveTo(49, 70);
+        context.quadraticCurveTo(53, 75, 58, 71);
+        context.stroke();
+        return;
+      }
+      head(context);
+      if (variant === 'solid') context.fill();
+      else context.stroke();
+      if (variant === 'solid') context.globalCompositeOperation = 'destination-out';
+      for (const center of [47, 81]) {
+        context.beginPath();
+        context.ellipse(center, 66, size <= 20 ? 5.5 : 4, variant === 'solid' ? 6 : 4, 0, 0, Math.PI * 2);
+        context.fill();
+      }
+      if (size > 20) {
+        context.lineWidth = 4.5;
+        context.beginPath();
+        context.moveTo(58, 81);
+        context.quadraticCurveTo(64, 87, 70, 81);
+        context.stroke();
+      }
+    }
+
+    function render() {
+      root.dataset.selected = selected;
+      for (const button of root.querySelectorAll('[data-choice]')) {
+        button.setAttribute('aria-pressed', String(button.dataset.choice === selected));
+      }
+      root.querySelector('#cat-selected-name').textContent = `当前预览：${names[selected]}`;
+      canvases.forEach(paint);
+    }
+
+    for (const button of root.querySelectorAll('[data-choice]')) {
+      button.addEventListener('click', () => {
+        selected = button.dataset.choice;
+        render();
+      });
+    }
+    appearance.addEventListener('change', render);
+    const observer = new MutationObserver(render);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-theme'] });
+    render();
+  })();
+</script>

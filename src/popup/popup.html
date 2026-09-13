@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>划词查词</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <span class="brand" aria-hidden="true"><span class="brand-logo"></span></span>
+        <div><h1>划词查词</h1><p>本地词库 · 无需联网</p></div>
+      </header>
+      <section class="controls" aria-label="查词设置">
+        <label class="setting">
+          <span><strong>启用划词查词</strong><small>选中英文单词时显示</small></span>
+          <input id="global-enabled" type="checkbox" role="switch" disabled>
+        </label>
+        <label class="setting">
+          <span><strong>在当前网站启用</strong><small id="hostname">正在识别当前页面…</small></span>
+          <input id="site-enabled" type="checkbox" role="switch" disabled>
+        </label>
+      </section>
+      <p id="status" class="status" role="status" aria-live="polite">正在读取设置…</p>
+      <p class="privacy">选词与网页内容不会上传</p>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
