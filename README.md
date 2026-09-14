@@ -6,6 +6,12 @@
 
 当前版本：`0.1.0`，基于 Manifest V3。主要实机验收环境为 `ego lite`；Chrome、Edge 是兼容目标，尚未完成独立实机验证。
 
+## 界面预览
+
+![在 Wikipedia 网页中选中 public 后显示离线查词卡片](docs/qa/ego-lite-wikipedia-public.png)
+
+截图来自 `ego lite` 中实际安装的扩展：在 Wikipedia 网页正文中双击选中 `public`，等待扩展从内置词库返回完整释义后截取。页面没有预置或模拟查词卡片，详细验收说明见[首版验收记录](docs/qa/ego-lite-acceptance.md)。
+
 ## 功能特点
 
 | 功能 | 说明 |
